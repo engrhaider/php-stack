@@ -1,0 +1,50 @@
+{
+	# Local dev: no public ACME, no email needed.
+	# Certificates are provided per-site via mkcert (see the `tls` directives).
+	admin off
+}
+
+# Reusable settings shared by every local site.
+(local) {
+	encode zstd gzip
+	tls /certs/local.pem /certs/local-key.pem
+}
+
+# ---------------------------------------------------------------------------
+# Example: plain PHP site, docroot = projects/mysite
+# Copy this block per project. Remember to:
+#   1. add the domain to your mkcert certificate
+#   2. map the domain to 127.0.0.1 in /etc/hosts
+# ---------------------------------------------------------------------------
+app.local {
+	import local
+	root * /var/www/mysite
+	php_fastcgi php-fpm:9000
+	file_server
+	log {
+		output file /var/log/caddy/app.log
+	}
+}
+
+# ---------------------------------------------------------------------------
+# Example: framework with a public/ docroot (e.g. Laravel, Symfony)
+# ---------------------------------------------------------------------------
+# laravel.local {
+# 	import local
+# 	root * /var/www/myapp/public
+# 	php_fastcgi php-fpm:9000
+# 	file_server
+# 	log {
+# 		output file /var/log/caddy/laravel.log
+# 	}
+# }
+
+# ---------------------------------------------------------------------------
+# Fallback: https://localhost browses the whole project tree
+# ---------------------------------------------------------------------------
+localhost {
+	import local
+	root * /var/www
+	php_fastcgi php-fpm:9000
+	file_server browse
+}

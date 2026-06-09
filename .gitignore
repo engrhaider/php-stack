@@ -1,0 +1,30 @@
+# Secrets & local env
+/.env
+
+# Editor / OS cruft
+/.vscode
+.idea
+.DS_Store
+
+# Generated TLS certificates (run mkcert locally)
+/config/caddy/certs/
+
+# Your real Caddyfile (with private domains) — commit Caddyfile.sample instead
+/config/caddy/Caddyfile
+
+# Database dumps / seeds (can be large or private) — keep the init script
+/config/initdb/*.sql
+/config/initdb/*.sql.gz
+
+# Runtime data — keep the directories, ignore their contents
+/data/*
+!/data/.gitkeep
+/logs/*
+!/logs/.gitkeep
+
+# Your projects live here — keep the directory, ignore its contents
+/projects/*
+!/projects/.gitkeep
+
+# Misc
+/buildtest
