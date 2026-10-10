@@ -26,7 +26,7 @@ path. One `php-fpm` image serves every site (`Dockerfile-php-fpm`).
 ## Prerequisites
 
 - [Docker](https://docs.docker.com/get-docker/) with Compose v2
-- [mkcert](https://github.com/FiloSottile/mkcert) — for trusted local HTTPS certificates
+- [mkcert](https://github.com/FiloSottile/mkcert) — for browser-trusted local HTTPS certificates
 
 ## First-time setup
 
@@ -39,7 +39,7 @@ path. One `php-fpm` image serves every site (`Dockerfile-php-fpm`).
    Edit `.env` and change the MySQL credentials and any host ports that
    conflict with services already running on your machine.
 
-2. **Generate a local certificate** and trust the CA (one time, asks for your password):
+2. **Generate a browser-trusted local certificate** and trust the CA (one time, asks for your password):
 
    ```shell
    mkcert -install
@@ -48,7 +48,8 @@ path. One `php-fpm` image serves every site (`Dockerfile-php-fpm`).
    ```
 
    Include every domain you reference in the Caddyfile. Re-run the second
-   command whenever you add a new domain.
+   command whenever you add a new domain. The generated certificate and key
+   are stored in `config/caddy/certs/`, which is excluded from Git.
 
 3. **Map your domains to localhost** in `/etc/hosts`:
 
